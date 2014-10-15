@@ -4,7 +4,7 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "chef/ubuntu-13.10"
+  config.vm.box = "hashicorp/precise64"
 
   # config.vm.network :forwarded_port, guest: 80, host: 8080
   # config.vm.network :forwarded_port, guest: 8000, host: 8100
@@ -19,9 +19,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision "shell", inline: <<-shell
     sudo apt-get update
+    sudo apt-get install htop git -y --force-yes
 
+    sudo apt-get install software-properties-common python-software-properties -y --force-yes
+    sudo add-apt-repository ppa:mapnik/boost -y
     wget -O - http://dl.hhvm.com/conf/hhvm.gpg.key | sudo apt-key add -
-    echo deb http://dl.hhvm.com/ubuntu saucy main | sudo tee /etc/apt/sources.list.d/hhvm.list
+    echo deb http://dl.hhvm.com/ubuntu precise main | sudo tee /etc/apt/sources.list.d/hhvm.list
     sudo apt-get update
     sudo apt-get install hhvm -y --force-yes
 
@@ -31,7 +34,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     sudo apt-get update
     sudo apt-get install sublime-text -y --force-yes
 
-    wget https://github.com/SiebelsTim/hack-sublime/blob/master/Hack.sublime-package?raw=true -O /home/vagrant/.config/sublime-text-2/Installed\ Packages/Hack.sublime-package
+    mkdir Desktop
+    wget https://gist.githubusercontent.com/michalsanger/f141149da76c7074940c/raw/21bea79b271aef326fc27d5c5ca842d32e3b6dbb/Ubuntu_Unit_Terminal_launcher -O /home/vagrant/Desktop/terminal.desktop
+    chmod u+x /home/vagrant/Desktop/terminal.desktop
+    sudo chown -R vagrant:vagrant Desktop
+
+    mkdir /home/vagrant/.config
+    mkdir -p "/home/vagrant/.config/sublime-text-2/Installed Packages/"
+    wget https://github.com/SiebelsTim/hack-sublime/blob/master/Hack.sublime-package?raw=true -O "/home/vagrant/.config/sublime-text-2/Installed Packages/Hack.sublime-package"
+    sudo chown -R vagrant:vagrant /home/vagrant/.config
   shell
 
 end
