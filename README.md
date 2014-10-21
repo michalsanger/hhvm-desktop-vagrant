@@ -7,4 +7,4 @@ There's installed HHVM and Sublime with [Hack plugin](https://github.com/Siebels
 ## Credits
 
 I got some inspiration from:
-- https://raw.githubusercontent.com/vicb/hhvm-vagrant/
+- https://github.com/vicb/hhvm-vagrant
