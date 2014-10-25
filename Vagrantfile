@@ -28,7 +28,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     sudo apt-get update
     sudo apt-get install hhvm -y --force-yes
 
-    sudo apt-get install --no-install-recommends ubuntu-desktop -y --force-yes
+    sudo apt-get install ubuntu-desktop -y --force-yes
+    sudo apt-get -y purge ubuntuone* libreoffice* thunderbird ubuntu-docs ibus-pinyin gnome-user-guide samba*
 
     sudo add-apt-repository ppa:webupd8team/sublime-text-2 -y
     sudo apt-get update
@@ -43,6 +44,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     mkdir -p "/home/vagrant/.config/sublime-text-2/Installed Packages/"
     wget https://github.com/SiebelsTim/hack-sublime/blob/master/Hack.sublime-package?raw=true -O "/home/vagrant/.config/sublime-text-2/Installed Packages/Hack.sublime-package"
     sudo chown -R vagrant:vagrant /home/vagrant/.config
+    
+    sudo apt-get autoremove -y
   shell
 
 end
