@@ -1,6 +1,6 @@
 # HHVM Desktop Vagrant box
 
-Ubuntu Precise desktop box ready to code in Hack.
+Ubuntu Precise desktop box ready for your development in the Hack lang.
 
 There's installed HHVM and Sublime with [Hack plugin](https://github.com/SiebelsTim/hack-sublime/) for typechecking and autocompletion.
 
