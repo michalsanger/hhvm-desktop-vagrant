@@ -16,6 +16,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ["modifyvm", :id, "--ostype", "Ubuntu_64"]
     vb.gui = true
   end
+  
+  config.vm.provision "file", source: "terminal.desktop", destination: "/home/vagrant/Desktop/terminal.desktop"
 
   config.vm.provision "shell", inline: <<-shell
     sudo apt-get update
@@ -35,17 +37,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     sudo apt-get update
     sudo apt-get install sublime-text -y --force-yes
 
-    mkdir Desktop
-    wget https://gist.githubusercontent.com/michalsanger/f141149da76c7074940c/raw/21bea79b271aef326fc27d5c5ca842d32e3b6dbb/Ubuntu_Unit_Terminal_launcher -O /home/vagrant/Desktop/terminal.desktop
-    chmod u+x /home/vagrant/Desktop/terminal.desktop
-    sudo chown -R vagrant:vagrant Desktop
-
-    mkdir /home/vagrant/.config
     mkdir -p "/home/vagrant/.config/sublime-text-2/Installed Packages/"
-    wget https://github.com/SiebelsTim/hack-sublime/blob/master/Hack.sublime-package?raw=true -O "/home/vagrant/.config/sublime-text-2/Installed Packages/Hack.sublime-package"
+    mkdir /tmp/hack-sublime
+    git clone https://github.com/SiebelsTim/hack-sublime.git /tmp/hack-sublime
+    cp /tmp/hack-sublime/Hack.sublime-package "/home/vagrant/.config/sublime-text-2/Installed Packages/Hack.sublime-package"
+    rm -rf /tmp/hack-sublime
+    
     sudo chown -R vagrant:vagrant /home/vagrant/.config
+    sudo chown -R vagrant:vagrant Desktop
     
     sudo apt-get autoremove -y
   shell
+
+
 
 end
